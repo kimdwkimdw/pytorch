@@ -274,6 +274,24 @@ static PyMethodDef torch_functions[] = {
   {NULL}
 };
 
+PyMethodDef torch_functions_org2[] = {
+//    {"from_numpy", (PyCFunction)THPVariable_from_numpy, METH_STATIC | METH_O, NULL},
+    {"zeros", (PyCFunction)THPVariable_zeros, METH_VARARGS | METH_KEYWORDS, NULL},
+    {"arange", (PyCFunction)THPVariable_arange, METH_VARARGS | METH_KEYWORDS, NULL},
+    {"as_tensor", (PyCFunction)THPVariable_as_tensor, METH_VARARGS | METH_KEYWORDS, NULL},
+    {"clamp", (PyCFunction)THPVariable_clamp, METH_VARARGS | METH_KEYWORDS, NULL},
+    {"dsmm", (PyCFunction)THPVariable_mm, METH_VARARGS | METH_KEYWORDS, NULL},
+    {"hsmm", (PyCFunction)THPVariable_hspmm, METH_VARARGS | METH_KEYWORDS, NULL},
+    {"_promote_types", (PyCFunction)THPVariable__promote_types, METH_VARARGS | METH_KEYWORDS, NULL},
+    {"range", (PyCFunction)THPVariable_range, METH_VARARGS | METH_KEYWORDS, NULL},
+    {"saddmm", (PyCFunction)THPVariable_sspaddmm, METH_VARARGS | METH_KEYWORDS, NULL},
+    {"sparse_coo_tensor", (PyCFunction)THPVariable_sparse_coo_tensor, METH_VARARGS | METH_KEYWORDS, NULL},
+    {"spmm", (PyCFunction)THPVariable_mm, METH_VARARGS | METH_KEYWORDS, NULL},
+    {"tensor", (PyCFunction)THPVariable_tensor, METH_VARARGS | METH_KEYWORDS, NULL},
+    ${py_method_defs}
+    {NULL}
+};
+
 static PyTypeObject THPVariableFunctions = {
   PyVarObject_HEAD_INIT(NULL, 0)
   "torch._C._VariableFunctions",         /* tp_name */
@@ -320,6 +338,8 @@ void initTorchFunctions(PyObject* module) {
     throw python_error();
   }
   Py_INCREF(&THPVariableFunctions);
+//  Py_INCREF(&torch_functions_org);
+  PyModule_AddFunctions(module, torch_functions_org2);
   if (PyModule_AddObject(module, "_VariableFunctions", (PyObject*)&THPVariableFunctions) < 0) {
     throw python_error();
   }

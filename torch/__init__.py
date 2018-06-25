@@ -245,7 +245,8 @@ _C._initExtension(manager_path())
 del manager_path
 
 for name in dir(_C._VariableFunctions):
-    globals()[name] = getattr(_C._VariableFunctions, name)
+    if name not in __all__:
+        globals()[name] = getattr(_C._VariableFunctions, name)
 
 ################################################################################
 # Import interface functions defined in Python
